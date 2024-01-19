@@ -33,13 +33,13 @@ void input()
 void Dijkstra()
 {
     std::priority_queue<std::pair<int, int>> pq;
-    pq.push({0, start});
+    pq.push({start, 0});
     dist[start] = 0;
 
     while(!pq.empty())
     {
-        int cost = -pq.top().first;
-        int cur = pq.top().second;
+        int cur = pq.top().first;
+        int cost = -pq.top().second;
         pq.pop();
 
         if(dist[cur] < cost)
@@ -52,7 +52,7 @@ void Dijkstra()
             if(dist[next] > ncost)
             {
                 dist[next] = ncost;
-                pq.push({-ncost, next});
+                pq.push({next, -ncost});
             }
         }
     }
