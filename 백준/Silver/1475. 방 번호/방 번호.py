@@ -2,7 +2,6 @@ import sys
 # sys.stdin = open("input.txt", "r")
 
 cards = input()
-cardSetNum = 0
 cardNum = [0 for i in range(9)]
 
 def solve():
