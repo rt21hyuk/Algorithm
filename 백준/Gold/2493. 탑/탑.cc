@@ -20,12 +20,10 @@ void input()
 
 void solution()
 {
-    for(int i=0; i<N; i++)
+    stk.push({0, tower[0]});
+
+    for(int i=1; i<N; i++)
     {
-        if(stk.empty())
-        {
-            answer[i] = 0;
-        }
         while(!stk.empty())
         {
             int idx = stk.top().first;
