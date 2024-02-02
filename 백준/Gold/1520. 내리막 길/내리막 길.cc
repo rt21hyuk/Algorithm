@@ -19,7 +19,7 @@ void input()
         }
 }
 
-int dfs(int x, int y)
+int dfs(int y, int x)
 {
     if(x == N-1 && y == M-1)    return 1;
     if(dp[y][x] != -1)  return dp[y][x];
@@ -29,16 +29,15 @@ int dfs(int x, int y)
     for(int i=0; i<4; i++)
     {
         int nx = x + dx[i], ny = y + dy[i];
-
-        if(nx>=0 && ny>=0 && nx<N && ny<M)
+        if(nx>=0 && ny>=0 && nx < N && ny <M)
         {
             if(map[ny][nx] < map[y][x])
             {
-                dp[y][x] = dp[y][x] + dfs(nx, ny);
+                dp[y][x] = dp[y][x] + dfs(ny, nx);
             }
         }
     }
-    
+
     return dp[y][x];
 }
 
