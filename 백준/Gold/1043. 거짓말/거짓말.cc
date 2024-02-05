@@ -33,7 +33,7 @@ void input()
 
 int findParent(int a)
 {
-    if (a == parent[a]) return a;
+    if(parent[a] == a) return a;
     return parent[a] = findParent(parent[a]);
 }
 
@@ -48,7 +48,7 @@ bool isSameParent(int a, int b)
 {
     a = findParent(a);
     b = findParent(b);
-    if (a == b) return true;
+    if(a == b) return true;
     return false;
 }
 
