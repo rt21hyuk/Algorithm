@@ -1,6 +1,6 @@
 #include <iostream>
 #include <stack>
-#include <typeinfo>
+
 using namespace std;
 
 string str;
