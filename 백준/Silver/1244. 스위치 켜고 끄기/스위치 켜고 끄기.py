@@ -1,35 +1,34 @@
-import sys
-input = sys.stdin.readline
+# import sys
+# sys.stdin = open("input.txt", "r")
 
-n = int(input())
-arr = list(map(int,input().split()))
-student = int(input())
-arr.insert(0,0)
+boy = 1
+girl = 2
 
-for _ in range(student):
-    gender,num = map(int,input().split())
+def solve():
+    for gender, idx in studentInfo:
+        cur = idx-1
 
-    if gender == 1:
-        for i in range(1,len(arr)):
-            if i%num==0:
-                arr[i]=arr[i]^1
-
-    else:
-        if num < n//2:
-            limit = num-1
+        if gender == boy:
+            for i in range(cur, numOfSwitch, idx):
+                switchList[i] = (switchList[i]+1) % 2
         else:
-            limit = n-num
-        for i in range(limit,0,-1):
-            if arr[num-i:num+i+1] == arr[num-i:num+i+1][::-1]:
-                for j in range(i,0,-1):
-                    arr[num-j],arr[num+j] = arr[num-j]^1, arr[num+j]^1
+            i=1
+            switchList[cur] = (switchList[cur]+1) % 2
+            while cur-i >= 0 and cur+i < numOfSwitch:
+                if switchList[cur-i] == switchList[cur+i]:
+                    switchList[cur-i] = (switchList[cur-i]+1) % 2
+                    switchList[cur+i] = (switchList[cur+i]+1) % 2
+                    i=i+1
+                else:
                     break
-        arr[num] = arr[num] ^ 1
 
+    for i in range(1, numOfSwitch+1):
+        print(switchList[i-1], end=" ")
+        if i % 20 == 0:
+            print()
 
-
-for i in range(1,n+1):
-    print(arr[i],end=' ')
-    if i%20==0:
-        print()
-
+numOfSwitch = int(input())
+switchList = list(map(int, input().split()))
+numOfStudent = int(input())
+studentInfo = [map(int, input().split()) for _ in range(numOfStudent)]
+solve()
