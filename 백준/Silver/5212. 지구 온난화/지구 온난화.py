@@ -18,8 +18,6 @@ def check(ci, cj):
 n, m = map(int, input().split())
 area = [list(input()) for _ in range(n)]
 newArea = []
-answer = 0
-s, e = m, 0
 sink = []
 
 for i in range(n):
@@ -40,14 +38,15 @@ for i in range(n):
         y1 = min(y1, i)
         y2 = max(y2, i)
 
-for i in range(y1, y2+1):
-    for j in range(m):
-        if area[i][j] == 'X':
+for j in range(m):
+    for i in range(y1, y2+1):
+        if area[i][j] == "X":
             x1 = min(x1, j)
             x2 = max(x2, j)
+            break
 
-# 정답 출력하기
+# 정답 출력
 for i in range(y1, y2+1):
     for j in range(x1, x2+1):
-        print(area[i][j], end='')
+        print(area[i][j], end="")
     print()
