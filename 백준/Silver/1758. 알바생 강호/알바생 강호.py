@@ -12,5 +12,7 @@ total = 0
 for i in range(n):
     if person[i] - i > 0:
         total = total + person[i] - i
+    else:
+        break
 
 print(total)
