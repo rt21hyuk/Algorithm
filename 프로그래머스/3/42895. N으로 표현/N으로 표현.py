@@ -1,25 +1,24 @@
+cal = {0:lambda x,y: x+y,
+      1:lambda x,y: x-y,
+      2:lambda x,y: x*y,
+      3:lambda x,y: x//y}
+
 def solution(N, number):
     dp = [[] for _ in range(9)]
-    for l in range(1, 9):
+    for i in range(1, 9):
         combSet = set()
-        combSet.add(int(str(N)*l))
-        for i in range(1, l):
-            for n1 in dp[i]:
-                for n2 in dp[l-i]:
-                    plus = n1+n2
-                    minus = n1-n2
-                    mul = n1*n2
-                    combSet.add(plus)
-                    combSet.add(mul)
-                    if n2 != 0:
-                        div = n1//n2
-                        combSet.add(div)
-                    
-                    if minus > 0:
-                        combSet.add(minus)
+        combSet.add(int(str(N)*i))
+        for j in range(1, i):
+            for n1 in dp[j]:
+                for n2 in dp[i-j]:
+                    for k in range(4):
+                        if k!=3 or n2 != 0:
+                            val = cal[k](n1, n2)
+                        if val > 0:
+                            combSet.add(val)
                         
         if number in combSet:
-            return l
+            return i
         for num in combSet:
-            dp[l].append(num)
+            dp[i].append(num)
     return -1
