@@ -8,11 +8,11 @@ def bfs(start, computers, visited):
         cur = q.popleft()
         
         for idx in range(len(computers[cur])):
-            # next = computers[cur][idx]
-            # print(cur, next)
-            if visited[idx] == 1:
+
+            if visited[idx]:
                 continue
-            if computers[cur][idx] == 1:
+                
+            if computers[cur][idx]:
                 q.append(idx)
                 visited[idx] = 1
     
@@ -23,7 +23,6 @@ def solution(n, computers):
     for i in range(n):
         if visited[i] == 0:
             bfs(i, computers, visited)
-            print(visited)
             answer += 1
             
     return answer
