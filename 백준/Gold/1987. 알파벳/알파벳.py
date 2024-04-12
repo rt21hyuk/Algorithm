@@ -1,39 +1,34 @@
-def dfs(x, y, visited, count):
-    global max_count
+import sys
+input = sys.stdin.readline
+# sys.stdin = open("input.txt", "r")
 
-    # 현재 위치의 알파벳 방문 표시
-    visited[ord(board[x][y]) - ord('A')] = True
+di = [-1, 0, 1, 0]
+dj = [0, -1, 0, 1]
 
-    # 현재까지 이동한 칸의 수 갱신
-    count += 1
+def dfs(depth, ci, cj):
+    global maxDepth
+    if maxDepth < depth:
+        maxDepth = depth
 
-    # 상하좌우 이동
-    for dx, dy in directions:
-        nx, ny = x + dx, y + dy
+    visited[ord(area[ci][cj]) - ord('A')] = 1
 
-        # 다음 위치가 보드 내에 있고, 아직 방문하지 않은 알파벳인 경우
-        if 0 <= nx < R and 0 <= ny < C and not visited[ord(board[nx][ny]) - ord('A')]:
-            dfs(nx, ny, visited, count)
+    for idx in range(4):
+        ni, nj = ci + di[idx], cj + dj[idx]
 
-    # 이동이 끝난 후, 최대 칸 수 갱신
-    max_count = max(max_count, count)
+        if ni < 0 or nj < 0 or ni >= n or nj >= m:
+            continue
 
-    # 현재 위치의 알파벳 방문 표시 해제
-    visited[ord(board[x][y]) - ord('A')] = False
+        next = ord(area[ni][nj]) - ord('A')
 
-R, C = map(int, input().split())
-board = [input().rstrip() for _ in range(R)]
+        if visited[next] == 0:
+            visited[next] = 1
+            dfs(depth+1, ni, nj)
+            visited[next] = 0
 
-# 상하좌우 방향
-directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+maxDepth = 0
+n, m = map(int, input().split())
+area = [list(input()) for _ in range(n)]
+visited = [0 for _ in range(26)]
+dfs(1, 0, 0)
 
-# 방문한 알파벳을 저장하기 위한 배열
-visited = [False] * 26
-
-# 최대 칸 수 초기화
-max_count = 0
-
-# 시작 위치에서 DFS 시작
-dfs(0, 0, visited, 0)
-
-print(max_count)
+print(maxDepth)
