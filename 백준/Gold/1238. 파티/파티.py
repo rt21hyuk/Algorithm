@@ -19,6 +19,9 @@ def dijkstra(start, end):
     if cur == end:
       return cost
 
+    if minCost[cur] < cost:
+      continue
+
     for next, nextCost in graph[cur]:
       if cost + nextCost < minCost[next]:
         minCost[next] = cost + nextCost
