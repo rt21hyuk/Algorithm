@@ -1,35 +1,22 @@
-import sys
-# sys.stdin = open("input.txt", "r")
-
 N = int(input())
-arr = list(map(int, input().split()))
-arr.sort()
+potions = list(map(int,input().split()))
+potions.sort()
 
-left = 0
-right = N - 1
-sumResult = abs(arr[left] + arr[right])
-answer = [arr[left], arr[right]]
+start, end = 0, N-1
+SUM_abs = abs(potions[start] + potions[end])
+result = [potions[start],potions[end]]
+while start < end:
+    SUM = potions[start] + potions[end]
 
-def binarySearch():
-    global left, right, sumResult, answer
+    if abs(SUM) < SUM_abs:
+        SUM_abs = abs(SUM)
+        result = [potions[start],potions[end]]
 
-    while left < right:
-        sumVal = arr[left] + arr[right]
-    
-        if abs(sumVal) < sumResult:
-            sumResult = abs(sumVal)
-            answer = [arr[left], arr[right]]
+    if SUM == 0:
+        break
+    elif SUM < 0:
+        start += 1
+    elif SUM > 0:
+        end -= 1
 
-            if sumVal == 0:
-                break
-
-        if sumVal < 0:
-            left = left + 1
-        else:
-            right = right - 1
-
-def solve():
-    binarySearch()
-    print(answer[0], answer[1])
-
-solve()
+print(*result)
