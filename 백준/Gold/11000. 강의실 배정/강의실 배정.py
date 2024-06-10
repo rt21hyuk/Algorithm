@@ -11,7 +11,7 @@ pq = [classes[0][1]]
 # print(pq)
 
 for i in range(1, n):
-    if pq[0] <= classes[i][0]:
+    if pq and pq[0] <= classes[i][0]:
         heapq.heappop(pq)
     heapq.heappush(pq, classes[i][1])
     # print(pq)
