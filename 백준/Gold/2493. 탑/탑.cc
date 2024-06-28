@@ -1,72 +1,42 @@
-#include <iostream>
-#include <vector>
-#include <stack>
+#include<iostream>
+#include<stack>
 
 using namespace std;
 
-int N;
-vector<int> tower;
-vector<int> answer;
+int n, height;
 stack<pair<int, int>> stk;
 
-void input()
-{
-    cin >> N;
-    tower.resize(N);
-    answer.resize(N);
-    for(int i=0; i<N; i++)
-        cin >> tower[i];
+void input() {
+    cin >> n;
 }
 
-void solution()
-{
-    stk.push({0, tower[0]});
+void solution() {
+    for(int i=0; i<n; i++) {
+        cin >> height;
 
-    for(int i=1; i<N; i++)
-    {
-        while(!stk.empty())
-        {
-            int idx = stk.top().first;
-            int height = stk.top().second;
-
-            if(height >= tower[i])
-            {
-                answer[i] = idx + 1;
+        while(!stk.empty()) {
+            if(height <= stk.top().second){
+                cout << stk.top().first << " ";
                 break;
             }
-            else 
-            {
-                stk.pop();
-                
-                if(stk.empty() == true)
-                {
-                    answer[i] = 0;
-                }
-            }
+            stk.pop();
         }
-        stk.push({i, tower[i]});
+        if(stk.empty()) {
+            cout << 0 << " ";
+        }
+        stk.push({i+1, height});
     }
 }
 
-void print()
-{
-    cout << answer[0];
-    for(int i=1; i<N; i++)
-        cout << " " << answer[i];
-}
-
-void solve()
-{
+void solve() {
     input();
     solution();
-    print();
 }
 
-int main()
+int main(int argc, char** argv)
 {
-    std::cin.tie(NULL);
-	std::ios::sync_with_stdio(false);
-	// freopen("input.txt", "r", stdin);
+    cin.tie(NULL);
+    ios_base::sync_with_stdio(false);
     solve();
     return 0;
 }
