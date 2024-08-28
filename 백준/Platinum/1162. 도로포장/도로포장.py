@@ -8,9 +8,10 @@ start, end = 1, n
 
 def dijkstra():
     q = []
-    heappush(q, (0, start, 0))
-    minCost = [[float('inf')] * (k+1) for _ in range(n+1)]
-    minCost[start][0] = 0
+    cnt = 0
+    heappush(q, (0, start, cnt))
+    minCost = [[float('inf')]*(k+1) for _ in range(n+1)]
+    minCost[start][cnt] = 0
 
     while q:
         curCost, cur, count = heappop(q)
@@ -20,14 +21,13 @@ def dijkstra():
 
         for next in graph[cur]:
             nextCost = curCost + graph[cur][next]
-
             if nextCost < minCost[next][count]:
                 minCost[next][count] = nextCost
                 heappush(q, (nextCost, next, count))
 
-            if count < k and curCost < minCost[next][count + 1]:
-                minCost[next][count + 1] = curCost
-                heappush(q, (curCost, next, count + 1))
+            if count < k and curCost < minCost[next][count+1]:
+                minCost[next][count+1] = curCost
+                heappush(q, (curCost, next, count+1))
 
     print(min(minCost[end]))
 
