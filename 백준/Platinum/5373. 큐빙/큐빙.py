@@ -21,17 +21,19 @@ sideIdx = {'F': 0, 'D': 1, 'U': 2, 'L': 3, 'R': 4, 'B': 5}
 """
 
 def rotateSide(cube, side):
-    for _ in range(2):
-        index = sideIdx[side]
-        temp = cube[index][0][0]
-        cube[index][0][0] = cube[index][1][0]
-        cube[index][1][0] = cube[index][2][0]
-        cube[index][2][0] = cube[index][2][1]
-        cube[index][2][1] = cube[index][2][2]
-        cube[index][2][2] = cube[index][1][2]
-        cube[index][1][2] = cube[index][0][2]
-        cube[index][0][2] = cube[index][0][1]
-        cube[index][0][1] = temp
+    # for _ in range(2):
+    index = sideIdx[side]
+
+    temp = [row[:] for row in cube[index]]
+
+    cube[index][0][0] = temp[2][0]
+    cube[index][0][1] = temp[1][0]
+    cube[index][0][2] = temp[0][0]
+    cube[index][1][0] = temp[2][1]
+    cube[index][1][2] = temp[0][1]
+    cube[index][2][0] = temp[2][2]
+    cube[index][2][1] = temp[1][2]
+    cube[index][2][2] = temp[0][2]
 
 def simulate(cube, side):
     if side == 'U':
@@ -81,6 +83,7 @@ def printUpSide(cube):
     for i in range(3):
         print("".join(cube[2][i]), end="\n")
 
+
 def doCommand(cube, cmd):
     side, direction = cmd
     cnt = 1 if direction == '+' else 3
@@ -99,6 +102,8 @@ for _ in range(n):
         cube[3].append(['g', 'g', 'g'])
         cube[4].append(['b', 'b', 'b'])
         cube[5].append(['o', 'o', 'o'])
+    cntIdx = 1
+
     while cmdList:
         doCommand(cube, cmdList.popleft())
     printUpSide(cube)
