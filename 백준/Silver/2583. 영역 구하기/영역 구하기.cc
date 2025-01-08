@@ -9,7 +9,6 @@ using namespace std;
 const int N_MAX = 101, M_MAX = 101;
 
 int n, m, k, answer = 0;
-int maps[N_MAX][M_MAX];
 int visited[N_MAX][M_MAX];
 int dx[] = { -1, 0, 1, 0 }, dy[] = {0, -1, 0, 1};
 vector<int> areas;
@@ -27,7 +26,7 @@ void bfs(int y, int x) {
 			int ny = cy + dy[i], nx = cx + dx[i];
 
 			if (nx < 0 || ny < 0 || nx >= m || ny >= n) continue;
-			if (visited[ny][nx] == 1 || maps[ny][nx] == 1) continue;
+			if (visited[ny][nx] == 1) continue;
 
 			q.push({ ny, nx });
 			visited[ny][nx] = 1;
@@ -39,7 +38,6 @@ void bfs(int y, int x) {
 
 void input() {
 	cin >> n >> m >> k;
-	memset(maps, 0, sizeof(maps));
 	memset(visited, 0, sizeof(visited));
 
 	for (int i = 0; i < k; i++) {
@@ -48,7 +46,7 @@ void input() {
 
 		for (int x = x1; x < x2; x++) {
 			for (int y = y1; y < y2; y++) {
-				if (maps[y][x] == 0) maps[y][x] = 1;
+				if (visited[y][x] == 0) visited[y][x] = 1;
 			}
 		}
 	}
@@ -57,7 +55,7 @@ void input() {
 void solve() {
 	for (int j = 0; j < n; j++) {
 		for (int i = 0; i < m; i++) {
-			if (maps[j][i] == 0 && !visited[j][i]) {
+			if (!visited[j][i]) {
 				bfs(j, i);
 				answer++;
 			}
