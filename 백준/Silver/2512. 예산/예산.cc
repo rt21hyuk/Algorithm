@@ -3,47 +3,39 @@
 
 using namespace std;
 
-int n, totalCost, maxCost = 1, curCost = 1;
+int n, totalCost, answer=1;
 int costs[10001];
-
-int getCosts(int limitCost) {
-	int cost = 0;
-	for (int i = 0; i < n; i++) {
-		if (costs[i] < limitCost) cost += costs[i];
-		else cost += limitCost;
-	}
-	return cost;
-}
-
-void binarySearch() {
-	int left = 1, right = totalCost, mid;
-	while (left <= right) {
-		mid = (left + right) / 2;
-		int curTotalCost = getCosts(mid);
-		if (curTotalCost <= totalCost) left = mid + 1;
-		else if (curTotalCost > totalCost) right = mid - 1;
-	}
-	maxCost = left - 1;
-}
 
 void input() {
 	cin >> n;
 	for (int i = 0; i < n; i++) {
 		cin >> costs[i];
-		if (maxCost < costs[i]) maxCost = costs[i];
 	}
 	cin >> totalCost;
 }
 
 void solve() {
-	if (getCosts(100001) <= totalCost) return;
-	binarySearch();
+	sort(costs, costs + n);
+	int left = 1, right = costs[n - 1], curTotalCost;
+
+	while (left <= right) {
+		curTotalCost = 0;
+		int mid = (left + right) / 2;
+		for (int i = 0; i < n; i++) {
+			curTotalCost += min(costs[i], mid);
+		}
+		if (curTotalCost <= totalCost) {
+			answer = mid;
+			left = mid + 1;
+		}
+		else right = mid - 1;
+	}
 }
 
 void solution() {
 	input();
 	solve();
-	cout << maxCost;
+	cout << answer;
 }
 
 int main()
