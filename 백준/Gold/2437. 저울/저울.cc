@@ -15,20 +15,15 @@ int main() {
 
     sort(weights.begin(), weights.end());
 
-    int minTarget = 0, maxTarget = 0;
+    int maxTarget = 0;
 
     for (int weight : weights) {
-        int newMin = minTarget + weight;
-        int newMax = maxTarget + weight;
-
-        if (newMin > maxTarget + 1) {
+        if (weight > maxTarget + 1) {
             break;
-        } else {
-            maxTarget = newMax;
         }
+        maxTarget += weight;
     }
 
     cout << maxTarget + 1 << endl;
-    
     return 0;
 }
