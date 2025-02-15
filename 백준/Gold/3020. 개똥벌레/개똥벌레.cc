@@ -1,61 +1,42 @@
 #include <iostream>
-#include <vector>
-#include <algorithm>
 
 using namespace std;
 
 int N, H;
-vector<int> obsUp, obsDown;
-
-int binarySearchDown(const vector<int>& obsList, int x) {
-    int left = 0, right = N / 2 - 1;
-    while (left <= right) {
-        int mid = (left + right) / 2;
-        if (obsList[mid] <= x) {
-            left = mid + 1;
-        }
-        else {
-            right = mid - 1;
-        }
-    }
-    return N / 2 - left;
-}
+int top[500001];
+int bottom[500001];
 
 void input() {
     cin >> N >> H;
-    for (int i = 0; i < N; ++i) {
-        int barrier;
-        cin >> barrier;
-        if (i % 2 == 0) {
-            obsDown.push_back(barrier);
-        }
-        else {
-            obsUp.push_back(barrier);
-        }
+    int h;
+    for (int i = 0; i < N; i++) {
+        cin >> h;
+        // 석순
+        if (i % 2 == 0) bottom[h]++;
+        // 종유석
+        else top[H - h + 1]++;
     }
-    sort(obsUp.begin(), obsUp.end());
-    sort(obsDown.begin(), obsDown.end());
 }
 
 void solution() {
-    int obsMinNum = N;
-    int obsMinCount = 0;
+    for (int i = 1; i <= H; i++) {
+        top[i] += top[i - 1];
+        bottom[H - i] += bottom[H - i + 1];
+    }
 
-    for (int h = 1; h <= H; ++h) {
-        int obsUpNum = binarySearchDown(obsUp, H - h);
-        int obsDownNum = binarySearchDown(obsDown, h - 1);
-        int obsTotalNum = obsUpNum + obsDownNum;
-
-        if (obsTotalNum < obsMinNum) {
-            obsMinNum = obsTotalNum;
-            obsMinCount = 1;
+    int ans = N;
+    int cnt = 0;
+    for (int i = 1; i <= H; i++) {
+        if (top[i] + bottom[i] < ans) {
+            cnt = 1;
+            ans = top[i] + bottom[i];
         }
-        else if (obsTotalNum == obsMinNum) {
-            obsMinCount++;
+        else if (top[i] + bottom[i] == ans) {
+            cnt++;
         }
     }
 
-    cout << obsMinNum << " " << obsMinCount << endl;
+    cout << ans << " " << cnt;
 }
 
 void solve() {
