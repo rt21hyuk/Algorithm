@@ -12,7 +12,7 @@ struct Point {
 };
 
 int N, M, minVal = INT32_MAX;
-int chickenCount = 0;
+int chickenCnt = 0;
 int cityMap[MAX][MAX];
 int dist[MAX][MAX];
 std::vector<Point> chickenLocations;
@@ -64,7 +64,7 @@ void input() {
             std::cin >> cityMap[j][i];
 
             if (cityMap[j][i] == Chicken) {
-                chickenCount++;
+                chickenCnt++;
                 chickenLocations.push_back({ i, j });
             }
 
@@ -74,7 +74,7 @@ void input() {
 }
 
 void solution() {
-    int n = chickenCount, k = M;
+    int n = chickenCnt, k = M;
 
     std::vector<int> indices;
     std::vector<int> selectionMask;
@@ -83,15 +83,14 @@ void solution() {
         indices.push_back(i);
     }
 
-    for (int i = 0; i < k; i++) {
-        selectionMask.push_back(1);
-    }
-
     for (int i = 0; i < n - k; i++) {
         selectionMask.push_back(0);
     }
 
-    std::sort(selectionMask.begin(), selectionMask.end());
+    for (int i = 0; i < k; i++) {
+        selectionMask.push_back(1);
+    }
+
 
     do {
         for (int i = 0; i < selectionMask.size(); i++) {
